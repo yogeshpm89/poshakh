@@ -1,0 +1,32 @@
+<div id="registrationPage">
+	<div id="registerForm" class="tCenter">
+		<div class="formFieldDiv">
+			<input type="email" [(ngModel)]="user.email" placeholder="Email Address"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="text" [(ngModel)]="user.firstName" placeholder="Firstname"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="text" [(ngModel)]="user.lastName" placeholder="Lastname"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="number" [(ngModel)]="user.mobile" placeholder="Mobile Number"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="date" [(ngModel)]="user.birthDate" placeholder="Birthdate"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="password" [(ngModel)]="user.password" placeholder="Password"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="password" [(ngModel)]="user.confirmPassword" placeholder="Confirm Password"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="button" class="width45Per" value="Register" (click)="registerUser()" />
+			<input type="button" class="width45Per" value="Cancel" (click)="cancel()" />
+		</div>
+
+		<a routerLink="/login">Already have an account SignIn</a>
+		<a routerLink="/login">Forgot Password</a>
+	</div>
+</div>

@@ -1,0 +1,68 @@
+/* You can add global styles to this file, and also import other style files */
+
+.tCenter {
+	text-align: center;
+}
+
+/* Start: Form Field CSS */
+.formFieldDiv {
+	padding-top: 3px;
+	padding-bottom: 3px; 
+}
+
+.formFieldDiv input {
+	border: 1px solid #d4d5d6;
+    padding: 5px 8px;
+    width: 85%;
+}
+
+.formFieldDiv .width45Per {
+	width: 44%;
+}
+
+.form-group label {
+	font-size: 14px;
+	padding: 0px 0px 5px 0px;
+}
+
+.form-group select, .form-group input {
+	width: 300px;
+}
+
+label .labelSmallText {
+	font-size: 10px;
+}
+/* End: Form Field CSS */
+
+/* Start: table CSS */
+table {
+	border: 1px solid black;
+}
+
+table th {
+	background-color: lightblue;
+	border: 1px solid black;	
+}
+
+table td {
+	border: 1px solid black;	
+}
+
+/* End: table CSS */
+
+.w100 {
+	width: 100%;
+}
+
+.w10 {
+	width: 10%;
+}
+
+.w20 {
+	width: 20%;
+}
+
+.w25 {
+	width: 25%;
+}
+
