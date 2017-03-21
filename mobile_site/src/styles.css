@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+.tCenter {
+	text-align: center;
+}
+
+/* Start: Form Field CSS */
+.formFieldDiv {
+	padding-top: 3px;
+	padding-bottom: 3px; 
+}
+
+.formFieldDiv input {
+	border: 1px solid #d4d5d6;
+    padding: 5px 8px;
+    width: 85%;
+}
+
+.formFieldDiv .width45Per {
+	width: 44%;
+}
+/* End: Form Field CSS */
