@@ -11,8 +11,12 @@
     "outDir": "../dist/out-tsc",
     "sourceMap": true,
     "target": "es5",
+    "removeComments": true,
     "typeRoots": [
-      "../node_modules/@types"
-    ]
+      "../node_modules/@types",
+      "./node_modules"
+    ],
+    "rootDir": "./app",
+    "outFile": "dist/bundle.js"
   }
 }
