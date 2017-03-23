@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { FirebaseAuthService } from '.././firebase/firebase-auth.service';
+import { FirebaseDBService } from '.././firebase/firebase-db.service';
 import { StorageService } from '.././storage/storage.service';
 import 'rxjs/add/operator/switchMap';
 
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   	constructor(
       public firebaseAuthService: FirebaseAuthService,
+      private firebaseDBService: FirebaseDBService,
       private router: Router,
       private storageService: StorageService
     ) {}
@@ -28,13 +30,20 @@ export class LoginComponent implements OnInit {
       var storageService = this.storageService;
       var email = storageService.findInLocalStorage('email');
       var password = storageService.findInLocalStorage('password');
-
+      var loginComponent = this;
       // if username or password is null, first time user is logging in
     	this.user = new User();
       if (email != null && password != null) {
         this.user.email = email;
         this.user.password = password;
-        this.loginUser();
+
+        this.firebaseDBService.getAdminUser(true, email).then(function(data) {
+          if (!data) {
+            alert("Invalid user...");
+          } else {
+            loginComponent.loginUser();
+          }
+        });
       }
   	};
 
@@ -48,10 +57,10 @@ export class LoginComponent implements OnInit {
         storageService.saveInLocalStorage('password', user.password);
         router.navigate(['/home']);
       }, function(error) {
-        debugger;
+        //debugger;
       })
       .catch(function(error) { 
-          debugger;
+          //debugger;
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;

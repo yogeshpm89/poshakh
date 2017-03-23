@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { firebase } from '.././firebase/firebase-auth.service';
 import { Category } from '.././category/category';
 import { Product } from '.././product/product';
+import { User } from '.././user/user';
 
 @Injectable()
 export class FirebaseDBService {
@@ -22,9 +23,9 @@ export class FirebaseDBService {
 
     writeProductData(product): Promise<Object> {
 		var newProductKey = product.productId;
-    	debugger;
+    	//debugger;
     	if (!newProductKey) {
-	    	// Get a key for a new Post.
+	    	// Get a key for a new Product.
 	    	newProductKey = firebase.database().ref().child("products").push().key;
 	    }
 
@@ -47,6 +48,24 @@ export class FirebaseDBService {
 		    	});
     };
 
+
+    getAdminUser(isAdmin, email): Promise<User> {
+    	var productsRef = firebase.database().ref('Users');
+    	return productsRef.orderByChild("isAdmin").equalTo(isAdmin).once("value")
+    		.then(function(snapshot) {
+			    var user = null;
+			    snapshot.forEach(function(item) {
+			    	item = item.val();
+			    	if (item.email === email) {
+			    		user = item;
+			    		return true;
+			    	}
+			    });
+			    response => user;
+			    return user;
+			});
+    };
+
     getAllCategories(): Promise<Category[]> {
     	return firebase.database().ref('categories').once('value')
     	.then(function(snapshot) {
@@ -62,7 +81,7 @@ export class FirebaseDBService {
 		  response => categories;
 		  return categories;
 		});
-    }
+    };
 
     getAllProducts(): Promise<Product[]> {
     	return firebase.database().ref('products').once('value')

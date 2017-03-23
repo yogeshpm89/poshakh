@@ -38,7 +38,7 @@ import { AnchorImagesPipe } from './pipes/anchor-images.pipe';
     RouterModule.forRoot([
       {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/login',
         pathMatch: 'full'
       }, {
         path: 'login',
