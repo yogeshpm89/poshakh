@@ -7,8 +7,7 @@ import { Location }                 from '@angular/common';
 import { Observable }        		from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
-
-import { FirebaseAuthService } from '.././firebase/firebase-auth.service';
+import { firebase, FirebaseAuthService } from '.././firebase/firebase-auth.service';
 import { FirebaseDBService } from '.././firebase/firebase-db.service';
 import { Category } from '.././category/category';
 import { Product } from '.././product/product';
@@ -93,20 +92,18 @@ export class ProductComponent implements OnInit {
     };
 
     searchProduct() : void {
-      this.products = [];
-      this.firebaseDBService.searchProduct(this.searchText)
-      .then(data => this.searchProductSuccess(data))
-        .catch(function(error) { 
-            // error
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ...
-        });
-    };
-
-    searchProductSuccess(data): void {
-        this.products.push(data);
+      var me = this;
+      me.products = [];
+      var productsRef = firebase.database().ref('products');
+      productsRef.orderByChild("productName").equalTo(me.searchText).on("child_added", function(snapshot) {
+          var product = snapshot.val();
+          firebase.database().ref('categories').child(product.categoryId).once('value')
+            .then(function(snapshot) {
+              var category = snapshot.val();
+              product.categoryName = category.categoryName;
+              me.products.push(product); 
+            });
+      });
     };
 
   	onSubmit() : void {
