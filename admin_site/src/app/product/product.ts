@@ -10,4 +10,5 @@ export class Product {
 	productImages: string;
 	productStatus: string;
 	stock: number;
+	isActive: number;
 }

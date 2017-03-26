@@ -61,40 +61,43 @@
 
 	<button *ngIf="!showAddForm" (click)="showAddForm = !showAddForm">Add Product</button>
 	<br><br>
-	<input type="text" [(ngModel)]="searchText" placeholder="search product" />
-	<button (click)="searchProduct()">Search</button>
 	
-	<table *ngIf="!showAddForm">
-		<tr>
-			<th>Index</th>
-			<th>Category</th>
-			<th>Product ID</th>
-			<th>Product Name</th>
-			<th>Product Desc</th>
-			<th>Product Desc1</th>
-			<th>Product Price</th>
-			<th>Product Weight</th>
-			<th>Product Status</th>
-			<th>Product Stock</th>
-			<th>Product Images</th>
-			<th>Action</th>
-		</tr>
-		<tr *ngFor="let product of products; let i = index">
-			<td class="">{{i+1}}</td>
-			<td class="">{{product.categoryName}}</td>
-			<td class="">{{product.productId}}</td>
-			<td class="">{{product.productName}}</td>
-			<td class="">{{product.productDesc}}</td>
+	<div *ngIf="!showAddForm">
+		<input type="text" [(ngModel)]="searchText" placeholder="search product" />
+		<button (click)="searchProduct()">Search</button>
+		<table>
+			<tr>
+				<th>Index</th>
+				<th>Category</th>
+				<th>Product ID</th>
+				<th>Product Name</th>
+				<th>Product Desc</th>
+				<th>Product Desc1</th>
+				<th>Product Price</th>
+				<th>Product Weight</th>
+				<th>Product Status</th>
+				<th>Product Stock</th>
+				<th>Product Images</th>
+				<th>Action</th>
+			</tr>
+			<tr *ngFor="let product of products; let i = index">
+				<td class="">{{i+1}}</td>
+				<td class="">{{product.categoryName}}</td>
+				<td class="">{{product.productId}}</td>
+				<td class="">{{product.productName}}</td>
+				<td class="">{{product.productDesc}}</td>
 
-			<td class="">{{product.productLongDesc}}</td>
-			<td class="">{{product.productPrice}}</td>
-			<td class="">{{product.productWeight}}</td>
-			<td class="">{{product.productStatus}}</td>
-			<td class="">{{product.stock}}</td>
-			<td class="" [innerHTML]="product.productImages | anchorImagesPipe"></td>
-			<td class="">
-				<button (click)="editProduct(product.productId)">Edit</button>
-			</td>
-		</tr>
-	</table>
+				<td class="">{{product.productLongDesc}}</td>
+				<td class="">{{product.productPrice}}</td>
+				<td class="">{{product.productWeight}}</td>
+				<td class="">{{product.productStatus}}</td>
+				<td class="">{{product.stock}}</td>
+				<td class="" [innerHTML]="product.productImages | anchorImagesPipe"></td>
+				<td class="">
+					<button (click)="editProduct(product.productId)">Edit</button>
+					<button (click)="deleteProduct(product.productId)">Delete</button>
+				</td>
+			</tr>
+		</table>
+	</div>
 </div>

@@ -69,16 +69,20 @@ export class ProductComponent implements OnInit {
       this.productImageFiles = event.srcElement.files;
     };
 
-    editProduct(productId) : void {
+    editProduct(productId): void {
       var product = this.products.filter(x => x.productId == productId)[0];
       product.productImages = "";
       this.productForm.reset(product);
       this.showAddForm = true;
     };
 
-    searchProduct() : void {
-      this.firebaseDBService.searchProduct(this.searchText)
-      .then(data => data => this.products = data)
+    deleteProduct(productId): void {
+      var me = this;
+      var product = me.products.filter(x => x.productId == productId)[0];
+      product.productImages = "";
+      product.isActive = 0; 
+      me.firebaseDBService.writeProductData(product)
+      .then(data => me.onSubmitSuccess())
         .catch(function(error) { 
             // error
           // Handle Errors here.
@@ -86,6 +90,23 @@ export class ProductComponent implements OnInit {
           var errorMessage = error.message;
           // ...
         });
+    };
+
+    searchProduct() : void {
+      this.products = [];
+      this.firebaseDBService.searchProduct(this.searchText)
+      .then(data => this.searchProductSuccess(data))
+        .catch(function(error) { 
+            // error
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+        });
+    };
+
+    searchProductSuccess(data): void {
+        this.products.push(data);
     };
 
   	onSubmit() : void {

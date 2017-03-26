@@ -32,6 +32,10 @@ export class FirebaseDBService {
 	    return this.handleFileSelect(newProductKey, product.productImages)
 			    .then(function(urls) {
 				    var updates = {};
+				    if (product.isActive !== 0) {
+				    	product.isActive = 1;
+				    };
+
 				    updates["/products/" + newProductKey] = {
 				      productId: newProductKey,
 				      categoryId: product.categoryId,
@@ -42,7 +46,8 @@ export class FirebaseDBService {
 				      productWeight: product.productWeight,
 				      productStatus: product.productStatus,
 				      stock: product.stock,
-				      productImages: urls.toString()
+				      productImages: urls.toString(),
+				      isActive: product.isActive
 				    };
 			    	return firebase.database().ref().update(updates);
 		    	});
@@ -92,19 +97,22 @@ export class FirebaseDBService {
 		    firebase.database().ref('categories').child(product.categoryId).once('value')
 	    	.then(function(snapshot) {
 			  	var category = snapshot.val();
-				products.push({
-					productId: product.productId,
-					categoryId: product.categoryId,
-					categoryName: category.categoryName,
-					productName: product.productName,
-					productDesc: product.productDesc,
-					productLongDesc: product.productLongDesc,
-				    productPrice: product.productPrice,
-				    productWeight: product.productWeight,
-				    productStatus: product.productStatus,
-				    stock: product.stock,
-					productImages: product.productImages
-				});
+			  	if (product.isActive) {
+					products.push({
+						productId: product.productId,
+						categoryId: product.categoryId,
+						categoryName: category.categoryName,
+						productName: product.productName,
+						productDesc: product.productDesc,
+						productLongDesc: product.productLongDesc,
+					    productPrice: product.productPrice,
+					    productWeight: product.productWeight,
+					    productStatus: product.productStatus,
+					    stock: product.stock,
+						productImages: product.productImages,
+						isActive: product.isActive
+					});
+				}
 			});
 		    
 		  });
@@ -124,7 +132,8 @@ export class FirebaseDBService {
 				  	var category = snapshot.val();
 					product.categoryName = category.categoryName;
 					products.push(product);
-					response => products;   
+					response => products;
+					return products; 
 				});
 			});
 		});
