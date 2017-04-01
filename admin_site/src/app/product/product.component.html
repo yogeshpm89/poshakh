@@ -78,6 +78,7 @@
 				<th>Product Status</th>
 				<th>Product Stock</th>
 				<th>Product Images</th>
+				<th>Is Active</th>
 				<th>Action</th>
 			</tr>
 			<tr *ngFor="let product of products; let i = index">
@@ -93,9 +94,10 @@
 				<td class="">{{product.productStatus}}</td>
 				<td class="">{{product.stock}}</td>
 				<td class="" [innerHTML]="product.productImages | anchorImagesPipe"></td>
+				<td class="">{{product.isActive}}</td>
 				<td class="">
-					<button (click)="editProduct(product.productId)">Edit</button>
-					<button (click)="deleteProduct(product.productId)">Delete</button>
+					<a href="" (click)="editProduct(product.productId)">Edit</a>
+					<a href="" (click)="deleteProduct(product.productId)">Delete</a>
 				</td>
 			</tr>
 		</table>

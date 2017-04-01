@@ -54,7 +54,37 @@ export class ProductComponent implements OnInit {
     };
 
     getProducts(): void {
-      this.firebaseDBService.getAllProducts().then(data => this.products = data);
+      var me = this;
+      me.products = [];
+      //this.firebaseDBService.getAllProducts().then(data => this.products = data);
+      firebase.database().ref('products').once('value').then(function(snapshot) {
+        //var products = new Array<Product>();
+        debugger;
+        snapshot.forEach(function(product) {
+          var product = product.val();
+          firebase.database().ref('categories').child(product.categoryId).once('value')
+          .then(function(snapshot) {
+            var category = snapshot.val();
+            //if (product.isActive) {
+              me.products.push({
+                  productId: product.productId,
+                  categoryId: product.categoryId,
+                  categoryName: category.categoryName,
+                  productName: product.productName,
+                  productDesc: product.productDesc,
+                  productLongDesc: product.productLongDesc,
+                  productPrice: product.productPrice,
+                  productWeight: product.productWeight,
+                  productStatus: product.productStatus,
+                  stock: product.stock,
+                  productImages: product.productImages,
+                  isActive: product.isActive
+            });
+          //}
+        });
+          
+        });
+    });
     };
 
     getCategories(): void {
