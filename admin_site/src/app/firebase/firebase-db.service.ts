@@ -29,7 +29,7 @@ export class FirebaseDBService {
 	    	newProductKey = firebase.database().ref().child("products").push().key;
 	    }
 
-	    return this.handleFileSelect(newProductKey, product.productImages)
+	    return this.handleFileSelect('images/products/' + newProductKey, product.productImages)
 			    .then(function(urls) {
 				    var updates = {};
 				    if (product.isActive !== 0) {
@@ -53,6 +53,33 @@ export class FirebaseDBService {
 		    	});
     };
 
+
+    writeMaterialData(material): Promise<Object> {
+		var newMaterialKey = material.materialId;
+    	if (!newMaterialKey) {
+	    	newMaterialKey = firebase.database().ref().child("materials").push().key;
+	    }
+
+	    return this.handleFileSelect('images/materials/' + newMaterialKey, material.materialImages)
+			    .then(function(urls) {
+				    var updates = {};
+				    if (material.isActive !== 0) {
+				    	material.isActive = 1;
+				    };
+
+				    updates["/materials/" + newMaterialKey] = {
+				      materialId: newMaterialKey,
+				      materialName: material.materialName,
+				      materialDesc: material.materialDesc,
+				      materialLongDesc: material.materialLongDesc,
+				      materialPrice: material.materialPrice,
+				      materialStatus: material.materialStatus,
+				      materialImages: urls.toString(),
+				      isActive: material.isActive
+				    };
+			    	return firebase.database().ref().update(updates);
+		    	});
+    };
 
     getAdminUser(isAdmin, email): Promise<User> {
     	var productsRef = firebase.database().ref('Users');
@@ -139,7 +166,7 @@ export class FirebaseDBService {
 		});
     };
 
-    handleFileSelect(newProductKey, files): Promise<string> {
+    handleFileSelect(path, files): Promise<string> {
 		var count = 0;
 		var urls = [];
 		return new Promise(resolve => {
@@ -153,7 +180,7 @@ export class FirebaseDBService {
 		      // [START oncomplete]
 		      var storageRef = firebase.storage().ref();
 
-		      storageRef.child('images/products/' + newProductKey + '/' + file.name).put(file, metadata).then(function(snapshot) {
+		      storageRef.child(path + '/' + file.name).put(file, metadata).then(function(snapshot) {
 					    //storageRef.child('images').child('products').child(newProductKey).child(file.name).put(file, metadata).then(function(snapshot) {
 					    console.log('Uploaded', snapshot.totalBytes, 'bytes.');
 					    console.log(snapshot.metadata);

@@ -1,4 +1,4 @@
-<div id="categoryPage">
+<div id="productPage">
 	
 	<form *ngIf="showAddForm" [formGroup]="productForm" (ngSubmit)="onSubmit()" novalidate>
 
@@ -96,8 +96,8 @@
 				<td class="" [innerHTML]="product.productImages | anchorImagesPipe"></td>
 				<td class="">{{product.isActive}}</td>
 				<td class="">
-					<a href="" (click)="editProduct(product.productId)">Edit</a>
-					<a href="" (click)="deleteProduct(product.productId)">Delete</a>
+					<button (click)="editProduct(product.productId)">Edit</button>
+					<button (click)="deleteProduct(product.productId)">Delete</button>
 				</td>
 			</tr>
 		</table>

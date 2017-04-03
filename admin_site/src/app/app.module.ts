@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule }   from '@angular/router';
+import { RouterModule, Routes }   from '@angular/router';
 
 import { AppComponent } from './app/app.component';
 import { LoginComponent } from './login/login.component';
@@ -18,7 +18,17 @@ import { StorageService } from './storage/storage.service';
 
 import { StringImagesPipe } from './pipes/string-images.pipe';
 import { AnchorImagesPipe } from './pipes/anchor-images.pipe';
+import { MaterialComponent } from './material/material.component';
 
+const appRoutes: Routes = [
+      { path: '', redirectTo: '/login', pathMatch: 'full' }, 
+      { path: 'login', component: LoginComponent}, 
+      { path: 'register', component: RegisterComponent }, 
+      { path: 'home', component: HomeComponent }, 
+      { path: 'category', component: CategoryComponent }, 
+      { path: 'product', component: ProductComponent }, 
+      { path: 'material', component: MaterialComponent }
+    ];
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,35 +38,15 @@ import { AnchorImagesPipe } from './pipes/anchor-images.pipe';
     CategoryComponent,
     ProductComponent,
     StringImagesPipe,
-    AnchorImagesPipe
+    AnchorImagesPipe,
+    MaterialComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([
-      {
-        path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
-      }, {
-        path: 'login',
-        component: LoginComponent
-      }, {
-        path: 'register',
-        component: RegisterComponent
-      }, {
-        path: 'home',
-        component: HomeComponent
-      }, {
-        path: 'category',
-        component: CategoryComponent
-      }, {
-        path: 'product',
-        component: ProductComponent
-      }
-    ])
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
     FirebaseAuthService,
