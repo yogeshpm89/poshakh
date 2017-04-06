@@ -4,6 +4,7 @@ import { firebase } from '.././firebase/firebase-auth.service';
 import { Category } from '.././category/category';
 import { Product } from '.././product/product';
 import { User } from '.././user/user';
+import { Measurement } from '.././measurement/measurement';
 
 @Injectable()
 export class FirebaseDBService {
@@ -80,6 +81,52 @@ export class FirebaseDBService {
 			    	return firebase.database().ref().update(updates);
 		    	});
     };
+
+	writeMeasurementData(measurement): Promise<Object> {
+		var newMeasurementKey = measurement.measurementId;
+    	if (!newMeasurementKey) {
+	    	newMeasurementKey = firebase.database().ref().child("measurements").push().key;
+	    };
+
+	    return this.handleFileSelect('images/measurements/' + newMeasurementKey, measurement.measurementImages)
+			    .then(function(urls) {
+				    var updates = {};
+				    if (measurement.isActive !== 0) {
+				    	measurement.isActive = 1;
+				    };
+
+				    updates["/measurements/" + newMeasurementKey] = {
+				      	measurementId: newMeasurementKey,
+						measurementName: measurement.measurementName,
+						measurementDesc: measurement.measurementDesc,
+						measurementFor: measurement.measurementFor,
+						gender: measurement.gender,
+
+						shirtNeck: measurement.shirtNeck,
+						shirtChest: measurement.shirtChest,
+						shirtWaist: measurement.shirtWaist,
+						shirtHip: measurement.shirtHip,
+						shirtSeat: measurement.shirtSeat,
+						shirtLength: measurement.shirtLength,
+						shirtShoulder: measurement.shirtShoulder,
+						shirtArmLength: measurement.shirtArmLength,
+						shirtWrist: measurement.shirtWrist,
+
+						pantWaist: measurement.pantWaist,
+						pantHip: measurement.pantHip,
+						pantCrotch: measurement.pantCrotch,
+						pantThigh: measurement.pantThigh,
+						pantLength: measurement.pantLength,
+						pantSeat: measurement.pantSeat,
+						pantInseam: measurement.pantInseam,
+
+				      	measurementImages: urls.toString(),
+				      	isActive: measurement.isActive
+				    };
+			    	return firebase.database().ref().update(updates);
+		    	});
+	};
+
 
     getAdminUser(isAdmin, email): Promise<User> {
     	var productsRef = firebase.database().ref('Users');

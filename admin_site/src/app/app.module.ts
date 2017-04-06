@@ -19,6 +19,7 @@ import { StorageService } from './storage/storage.service';
 import { StringImagesPipe } from './pipes/string-images.pipe';
 import { AnchorImagesPipe } from './pipes/anchor-images.pipe';
 import { MaterialComponent } from './material/material.component';
+import { MeasurementComponent } from './measurement/measurement.component';
 
 const appRoutes: Routes = [
       { path: '', redirectTo: '/login', pathMatch: 'full' }, 
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
       { path: 'home', component: HomeComponent }, 
       { path: 'category', component: CategoryComponent }, 
       { path: 'product', component: ProductComponent }, 
-      { path: 'material', component: MaterialComponent }
+      { path: 'material', component: MaterialComponent },
+      { path: 'measurement', component: MeasurementComponent }
     ];
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ const appRoutes: Routes = [
     ProductComponent,
     StringImagesPipe,
     AnchorImagesPipe,
-    MaterialComponent
+    MaterialComponent,
+    MeasurementComponent
   ],
   imports: [
     BrowserModule,
