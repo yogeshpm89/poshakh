@@ -4,6 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes }   from '@angular/router';
 
+import { InputTextModule, TabMenuModule, PanelModule } from 'primeng/primeng';
+//import { ConfirmationService, Message } from "primeng/components/common/api";
+import {DataTableModule,SharedModule} from 'primeng/primeng';
+
+
 import { AppComponent } from './app/app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -49,6 +54,10 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
+    //start: primeng module
+    SharedModule, InputTextModule, TabMenuModule,
+    DataTableModule, SharedModule,
+    //end: primeng module
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

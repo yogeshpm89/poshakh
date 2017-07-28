@@ -11,6 +11,7 @@ import 'rxjs/add/operator/switchMap';
 import { FirebaseAuthService } from '.././firebase/firebase-auth.service';
 import { FirebaseDBService } from '.././firebase/firebase-db.service';
 import { Category } from '.././category/category';
+import { Car } from './car';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class CategoryComponent implements OnInit {
 	categories: Category[];
 	categoryForm: FormGroup;
 	showAddForm = false;
+	cars: Car[];
   	constructor(
   		private formBuilder: FormBuilder,
   		private firebaseAuthService: FirebaseAuthService,
