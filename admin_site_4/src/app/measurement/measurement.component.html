@@ -1,0 +1,203 @@
+<div id="measurementsPage">
+	
+	<form *ngIf="showAddForm" [formGroup]="measurementForm" (ngSubmit)="onSubmit()" novalidate>
+
+		<div class="form-group">
+	    	<label class="center-block">Measurement Name <span class="labelSmallText">(2 to 30 characters)</span>:</label><br>
+	      		<input class="form-control" formControlName="measurementName" required minlength="2" maxlength="30">
+	    	
+	    	<br><br>
+
+	    	<label class="center-block">Measurement For:</label><br>
+			<select class="form-control" formControlName="measurementFor" required>
+				<option value="shirt">Shirt</option>
+				<option value="pant">Pant</option>
+			</select>
+
+			<br><br>
+
+	    	<label class="center-block">Gender:</label><br>
+			<select class="form-control" formControlName="gender" required>
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+
+			<br><br>
+
+	    	<label class="center-block">Measurement Desc <span class="labelSmallText">(30 to 1000 characters)</span>: </label><br>
+	      	<textarea class="form-control" formControlName="measurementDesc" rows="4" cols="50" required minlength="30" maxlength="1000">
+			</textarea>
+
+		    <div *ngIf="(measurementForm.value.measurementFor === 'shirt')">
+		    	<br><br>
+			    <h1>Shirt Measurements : </h1>
+			    <label class="center-block">Shirt Neck<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtNeck"/>
+
+			    <br><br>
+
+			    <label class="center-block">Shirt Chest<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtChest"/>
+
+			    <br><br>
+
+			    <label class="center-block">Shirt Waist<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtWaist"/>
+
+			    <br><br>
+			    
+			    <label class="center-block">Shirt Hip<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtHip"/>
+
+			    <br><br>
+
+			    <label class="center-block">Shirt Seat<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtSeat"/>
+
+			    <br><br>
+
+			    <label class="center-block">Shirt Length<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtLength"/>
+
+			    <br><br>
+
+			    <label class="center-block">Shirt Shoulder<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtShoulder"/>
+
+			    <br><br>
+
+			    <label class="center-block">Shirt Arm Length<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtArmLength"/>
+
+			    <br><br>
+
+			    <label class="center-block">Shirt Wrist<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="shirtWrist"/>
+			
+			</div>
+
+
+		    <div *ngIf="measurementForm.value.measurementFor === 'pant'">
+		    	<br><br>
+			    <h1>Pant Measurements : </h1>
+			    <br><br>
+			    
+			    <label class="center-block">Pant Waist<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="pantWaist"/>
+
+			    <br><br>
+
+			    <label class="center-block">Pant Hip<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="pantHip"/>
+
+			    <br><br>
+
+			    <label class="center-block">Pant Croth<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="pantCrotch"/>
+
+			    <br><br>
+			    
+			    <label class="center-block">Pant Thigh<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="pantThigh"/>
+
+			    <br><br>
+
+			    <label class="center-block">Pant Length<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="pantLength"/>
+
+			    <br><br>
+			    
+			    <label class="center-block">Pant Seat<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="pantSeat"/>
+
+			    <br><br>
+
+			    <label class="center-block">Pant Inseam<span class="labelSmallText"></span>: </label><br>
+			    <input type="number" class="form-control" formControlName="pantInseam"/>
+
+			</div>
+
+		    <br><br>
+
+		    <label class="center-block">Measurement Images:</label><br>
+	    	<input type="file" [(ngModel)]="measurementImages" formControlName="measurementImages" (change)="onFilesChange($event)"  multiple/>
+	    
+	  	</div>
+	  	<br>
+	  	<div style="margin-bottom: 1em">
+	    	<button type="submit"
+	            [disabled]="measurementForm.status !== 'VALID'" class="btn btn-success">Save</button> &nbsp;
+	    	<button type="reset" (click)="revert()"
+	            [disabled]="measurementForm.pristine" class="btn btn-danger">Revert</button>
+	        <button *ngIf="showAddForm" (click)="showAddForm = !showAddForm" class="btn btn-danger">Cancel</button>
+	  	</div>
+	</form>
+
+	<button *ngIf="!showAddForm" (click)="showAddForm = !showAddForm">Add Measurement</button>
+	<br><br>
+	
+	<div *ngIf="!showAddForm">
+		<input type="text" [(ngModel)]="searchText" placeholder="search measurement" />
+		<button (click)="searchMeasurement()">Search</button>
+		<table>
+			<tr>
+				<th>Index</th>
+				<th>Measurement ID</th>
+				<th>Measurement Name</th>
+				<th>Measurement Desc</th>
+				<th>Measurement For</th>
+				<th>Gender</th>
+
+				<th>Shirt Measurement</th>
+				<th>Pant Measurement</th>
+
+				<th>Measurement Images</th>
+				<th>Is Active</th>
+				<th>Action</th>
+			</tr>
+			<tr *ngFor="let measurement of measurements; let i = index">
+				<td class="">{{i+1}}</td>
+				<td class="">{{measurement.measurementId}}</td>
+				<td class="">{{measurement.measurementName}}</td>
+				<td class="">{{measurement.measurementDesc}}</td>
+				<td class="">{{measurement.measurementFor}}</td>
+				<td class="">{{measurement.gender}}</td>
+
+				<td class="">
+					<span *ngIf="measurement.measurementFor === 'pant'">NA</span>
+					<div  *ngIf="measurement.measurementFor === 'shirt'">
+						Neck       : {{measurement.shirtNeck}}<br>
+						Chest      : {{measurement.shirtChest}}<br>
+						Waist      : {{measurement.shirtWaist}}<br>
+						Hip        : {{measurement.shirtHip}}<br>
+						Seat   	   : {{measurement.shirtSeat}}<br>
+						Length 	   : {{measurement.shirtLength}}<br>
+						Shoulder   : {{measurement.shirtShoulder}}<br>
+						Arm Length : {{measurement.shirtArmLength}}<br>
+						Wrist      : {{measurement.shirtWrist}}<br>
+					</div>
+				</td>
+
+				<td class="">
+					<span *ngIf="measurement.measurementFor === 'shirt'">NA</span>
+					<div  *ngIf="measurement.measurementFor === 'pant'">
+						Waist       : {{measurement.pantWaist}}<br>
+						Hip      	: {{measurement.pantHip}}<br>
+						Crotch      : {{measurement.pantCrotch}}<br>
+						Thigh       : {{measurement.pantThigh}}<br>
+						Length  	: {{measurement.pantLength}}<br>
+						Seat   	    : {{measurement.pantSeat}}<br>
+						Inseam      : {{measurement.pantInseam}}<br>
+					</div>
+				</td>
+
+				<td class="" [innerHTML]="measurement.measurementImages | anchorImagesPipe"></td>
+				<td class="">{{measurement.isActive}}</td>
+				<td class="">
+					<!-- <button (click)="editProduct(product.productId)">Edit</button>
+					<button (click)="deleteProduct(product.productId)">Delete</button>-->
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

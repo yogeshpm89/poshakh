@@ -1,0 +1,48 @@
+<div id="categoryPage">
+
+	<p-dialog header="Add Category" #addForm [(visible)]="showAddForm">
+
+		<form *ngIf="showAddForm" [formGroup]="categoryForm" (ngSubmit)="onSubmit()" novalidate>
+
+			<div class="form-group">
+				<label class="center-block">Category Name:
+					<input class="form-control" formControlName="categoryName">
+				</label><br><br>
+				<label class="center-block">Category Desc:
+					<input class="form-control" formControlName="categoryDesc">
+				</label>
+			</div>
+			<br>
+			<div style="margin-bottom: 1em">
+				<button type="submit"
+					[disabled]="categoryForm.status !== 'VALID'" class="btn btn-success">Save</button> &nbsp;
+				<button type="reset" (click)="revert()"
+					[disabled]="categoryForm.pristine" class="btn btn-danger">Revert</button>
+			</div>
+		</form>
+	</p-dialog>		
+	
+
+	<p-panel>
+		<p-blockUI [target]="categoryGrid" [blocked]="blockCategoryGrid">
+			<i class="spinner fa fa-refresh fa-spin fa-3x fa-fw"></i>
+		</p-blockUI>
+
+		<p-header>
+			<div class="ui-helper-clearfix">
+				<span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Category List</span>
+				<button (click)="showAddCategoryDialog();" pButton label="Add Category"></button>
+				<!-- <p-splitButton [style]="{'float':'right'{" label="Save" icon="fa-check" (onClick)="save()" [model]="items"></p-splitButton> -->
+			</div>
+		</p-header>
+	<p-dataTable #categoryGrid [value]="categories" 
+			[rows]="2" [paginator]="true" [pageLinks]="5"
+			resizableColumns="true" columnResizeMode="expand">
+		<p-column field="categoryId" header="Category ID"></p-column>
+		<p-column field="categoryName" header="Category Name"></p-column>
+		<p-column field="categoryDesc" header="Category Description"></p-column>
+		<p-column field="Action" header="Action"></p-column>
+	</p-dataTable>
+	</p-panel>
+
+</div>

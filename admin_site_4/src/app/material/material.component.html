@@ -1,0 +1,85 @@
+<div id="materialPage">
+	
+	<form *ngIf="showAddForm" [formGroup]="materialForm" (ngSubmit)="onSubmit()" novalidate>
+
+		<div class="form-group">
+
+			<label class="center-block">Material:</label><br>
+			<br><br>
+	    	<label class="center-block">Material Name <span class="labelSmallText">(10 to 100 characters)</span>:</label><br>
+	      		<input class="form-control" formControlName="materialName" required minlength="10" maxlength="100">
+	    	
+	    	<br><br>
+	    	<label class="center-block">Material Desc <span class="labelSmallText">(30 to 1000 characters)</span>: </label><br>
+		      	<textarea class="form-control" formControlName="materialDesc" rows="4" cols="50" required minlength="30" maxlength="1000">
+				</textarea>
+		   
+		    <br><br>
+		    <label class="center-block">Material Long Desc <span class="labelSmallText">(50 to 4000 characters)</span>:</label><br>
+		      	<textarea class="form-control" formControlName="materialLongDesc" rows="4" cols="50" required minlength="50" maxlength="4000">
+				</textarea>
+		    
+		    <br><br>
+		    <label class="center-block">Material Price <span class="labelSmallText">(INR)</span>:</label><br>
+		      	<input type="number" class="form-control" formControlName="materialPrice">
+		    
+		    <br><br>
+		    <label class="center-block">Material Status:</label><br>
+			<select class="form-control" formControlName="materialStatus">
+				<option value="Not Available">Not Available</option>
+				<option value="Available">Available</option>
+			</select>
+			
+		    <br><br>
+		    <label class="center-block">Material Images:</label><br>
+		    	<input type="file" [(ngModel)]="materialImages" formControlName="materialImages" (change)="onFilesChange($event)"  multiple/>
+		    
+	  	</div>
+	  	<br>
+	  	<div style="margin-bottom: 1em">
+	    	<button type="submit"
+	            [disabled]="materialForm.status !== 'VALID'" class="btn btn-success">Save</button> &nbsp;
+	    	<button type="reset" (click)="revert()"
+	            [disabled]="materialForm.pristine" class="btn btn-danger">Revert</button>
+	        <button *ngIf="showAddForm" (click)="showAddForm = !showAddForm" class="btn btn-danger">Cancel</button>
+	  	</div>
+	</form>
+
+	<button *ngIf="!showAddForm" (click)="showAddForm = !showAddForm">Add Material</button>
+	<br><br>
+	
+	<div *ngIf="!showAddForm">
+		<input type="text" [(ngModel)]="searchText" placeholder="search material" />
+		<button (click)="searchMaterial()">Search</button>
+		<table>
+			<tr>
+				<th>Index</th>
+				<th>Material ID</th>
+				<th>Material Name</th>
+				<th>Material Desc</th>
+				<th>Material Desc1</th>
+				<th>Material Price</th>
+				<th>Material Status</th>
+				<th>Material Images</th>
+				<th>Is Active</th>
+				<th>Action</th>
+			</tr>
+			<tr *ngFor="let material of materials; let i = index">
+				<td class="">{{i+1}}</td>
+				<td class="">{{material.materialId}}</td>
+				<td class="">{{material.materialName}}</td>
+				<td class="">{{material.materialDesc}}</td>
+
+				<td class="">{{material.materialLongDesc}}</td>
+				<td class="">{{material.materialPrice}}</td>
+				<td class="">{{material.materialStatus}}</td>
+				<td class="" [innerHTML]="material.materialImages | anchorImagesPipe"></td>
+				<td class="">{{material.isActive}}</td>
+				<td class="">
+					<button (click)="editMaterial(material.materialId)">Edit</button>
+					<button (click)="deleteMaterial(material.materialId)">Delete</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

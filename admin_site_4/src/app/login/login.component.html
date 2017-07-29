@@ -1,0 +1,16 @@
+<div id="loginPage">
+	<div id="loginForm" class="tCenter">
+		<div class="formFieldDiv">
+			<input type="email" [(ngModel)]="user.email" placeholder="email address"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="password" [(ngModel)]="user.password" placeholder="password"/>
+		</div>
+		<div class="formFieldDiv">
+			<input type="button" class="width45Per" value="Login" (click)="loginUser()" />
+			<input type="button" class="width45Per" value="Cancel" (click)="cancel()" />
+		</div>
+
+		<!-- <a routerLink="/register">Don't have an account SignUp</a> -->
+	</div>
+</div>
